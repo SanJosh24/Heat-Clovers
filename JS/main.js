@@ -2,35 +2,19 @@
 
 // $('.back').click(function ()
 $('#start').click(function() {
+  console.log("starting new game!!!");
   var game = new Game();
-  console.log ("Hello");
   game.start();
 });
-
-// $('').click(function() {
-//   game.done();
-// });
-
-
-
-
-
-
-
-
-
-
-
-
-
 var panel = $("#quiz-area");
 
 // Question set
 var questions = [
   {
     question: "Inside which HTML element do we put the JavaScript?",
-    answers: ["<js>", "<script>", "<javascript>", "<scripting>"],
-    correctAnswer: "<script>"
+    answers: ["< js >", "< script >", "< javascript >", "< scripting >"],
+    correctAnswer: "< script >",
+    points: 2
   },
   {
     question:
@@ -41,26 +25,28 @@ var questions = [
       "#demo.innerHTML = 'Hello World!';",
       "document.getElementById('demo').innerHTML = 'Hello World!';"
     ],
-    correctAnswer: "document.getElementById('demo').innerHTML = 'Hello World!';"
+    correctAnswer: "document.getElementById('demo').innerHTML = 'Hello World!';",
+    points: 2
   },
   {
     question: "Where is the correct place to insert a JavaScript?",
     answers: [
-      "The <body> section",
-      "The <head> section",
-      "Both the <head> section and the <body> section are correct"
+      "The < body > section",
+      "The < head > section",
+      "Both the < head > section and the < body > section are correct"
     ],
-    correctAnswer: "Both the <head> section and the <body> section are correct"
+    correctAnswer: "Both the < head > section and the < body > section are correct",
+    points: 1
   },
   {
     question:
       "What is the correct syntax for referring to an external script called 'xxx.js'?",
     answers: [
-      "<script name='xxx.js'>",
-      "<script src='xxx.js'>",
-      "<script href='xxx.js'>"
+      "< script name='xxx.js' >",
+      "< script src='xxx.js' >",
+      "< script href='xxx.js' >"
     ],
-    correctAnswer: "<script src='xxx.js'>"
+    correctAnswer: "< script src='xxx.js' >"
   },
   {
     question: "The external JavaScript file must contain the <script> tag.",
@@ -420,11 +406,9 @@ var questions = [
 class Game {
   constructor() {
     this.incorrect = 0;
-    this.counter = 120;
+    this.counter = 1000;
     this.correct = 0;
   }
-
-
   countdown() {
     var timer = setInterval(() => {
       this.counter--;
@@ -436,36 +420,48 @@ class Game {
       }
     }, 1000)
   };
-
   start() {
     this.countdown()
 
     $("#sub-wrapper").prepend(
-      "<h2>Time Remaining: <span id='counter-number'>120</span> Seconds</h2>"  // inputing time remainder element as h2
+      "<h2>Time Remaining: <span id='counter-number'>10</span> Seconds</h2>"  // inputing time remainder element as h2
     ); 
 
     $("#start").remove();   // removes the start button once clicked
 
-    for (var i = 0; i < questions.length; i++) {
-      panel.append("<h2>" + questions[i].question + "</h2>");
-      for (var j = 0; j < questions[i].answers.length; j++) {
+    
+    // for (var i = 0; i < questions.length; i++) {
+      let random = Math.floor(Math.random()*questions.length);
+      // console.log("==================== ", questions[random]);
+      panel.append("<h2>" + questions[random].question + "</h2>");
+      for (var i = 0; i < questions[random].answers.length; i++) {
+        // console.log("==================== ", questions[random].answers[i]);
         panel.append(
-          "<input type='radio' name='question-" +
+          "<button id = 'answer' class= 'btn btn-warning answer' name='question-" +
             i +
             "' value='" +
-            questions[i].answers[j] +
+            questions[random].answers[i] +
             "''>" +
-            questions[i].answers[j]
+            questions[random].answers[i]
         );
-      }
+      // }
     }
 
-    panel.append("<button id='done'>Done</button>");
+    // panel.append("<button class='btn btn-dark' id='done'>Submit</button>");
+
+    $('#quiz-area > button').click(function() {
+      if ($(this).val() === questions[random].correctAnswer) {
+        this.correct++;
+      } else {
+        this.incorrect++;
+      }
+      // game.done();
+    });
   };
 
   done() {
     $.each($("input[name='question-0']:checked"), function() {
-      if ($(this).val() === questions[0].correctAnswer) {
+      if ($(this).val() === questions[random].correctAnswer) {
         this.correct++;
       } else {
         this.incorrect++;
@@ -490,38 +486,6 @@ class Game {
 
     $.each($("input[name='question-3']:checked"), function() {
       if ($(this).val() === questions[3].correctAnswer) {
-        this.correct++;
-      } else {
-        this.incorrect++;
-      }
-    });
-
-    $.each($("input[name='question-4']:checked"), function() {
-      if ($(this).val() === questions[4].correctAnswer) {
-        this.correct++;
-      } else {
-        this.incorrect++;
-      }
-    });
-
-    $.each($("input[name='question-5']:checked"), function() {
-      if ($(this).val() === questions[5].correctAnswer) {
-        this.correct++;
-      } else {
-        this.incorrect++;
-      }
-    });
-
-    $.each($("input[name='question-6']:checked"), function() {
-      if ($(this).val() === questions[6].correctAnswer) {
-        this.correct++;
-      } else {
-        this.incorrect++;
-      }
-    });
-
-    $.each($("input[name='question-7']:checked"), function() {
-      if ($(this).val() === questions[7].correctAnswer) {
         this.correct++;
       } else {
         this.incorrect++;
@@ -558,11 +522,10 @@ class Game {
 //     }
     
 //   }
-// }
 // var score= 0;
-// for(var i=0; i<myQuestions.length; i++);
-// var response= window.prompt(myQuestions[i].prompt(questions[i].prompt))
-// if (response == questions [i].correctAnswer){
+// // for(var i=0; i<myQuestions.length; i++);
+// var response= window.prompt(questions[i].prompt(questions[i].prompt))
+// if (response == questions[i].correctAnswer){
 //   score++;
 //   alert("Correct!");
 // } else{

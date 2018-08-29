@@ -1,8 +1,59 @@
-h1 {
-  text-align: center;
-  margin-top: 1vh;
+h2 {
+  color: orangered;
 }
 
-.basketball-background {
-  background-image: url(../1531404.jpg);
+span {
+  color: orangered;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  font-size: 3vw;
+  width: 21vw;
+}
+
+.img-fluid {
+  background-image: url(../images/1531404.jpg);
+  background-size: cover;
+  height: 100vh;
+}
+
+.start {
+  height: 8vh;
+  width: 8vw;
+  /* margin-left: 45vw; */
+}
+
+#sub-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  /* background-color: rgba(255, 255, 255, 0.5); */
+}
+
+#quiz-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  width: 45vw;
+}
+
+#scoreBoard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 2vh;
+}
+
+.blah {
+  width: 25vw;
+}
+
+.mainTitle {
+  display: flex;
+  justify-content: center;
 }
