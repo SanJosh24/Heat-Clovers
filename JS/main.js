@@ -1,12 +1,14 @@
+var game;
 // CLICK EVENTS
 
 // $('.back').click(function ()
 $('#start').click(function() {
   console.log("starting new game!!!");
-  var game = new Game();
+  game = new Game();
   game.start();
 });
 var panel = $("#quiz-area");
+var scoreboard = $("#scoreBoard");
 
 // Question set
 var questions = [
@@ -406,7 +408,7 @@ var questions = [
 class Game {
   constructor() {
     this.incorrect = 0;
-    this.counter = 1000;
+    this.counter = 24;
     this.correct = 0;
   }
   countdown() {
@@ -423,19 +425,61 @@ class Game {
   start() {
     this.countdown()
 
-    $("#sub-wrapper").prepend(
-      "<h2>Time Remaining: <span id='counter-number'>10</span> Seconds</h2>"  // inputing time remainder element as h2
+    scoreboard.prepend(
+      "<div class = 'shot-clock'><span id='counter-number'>24</span></div>"  // inputing time remainder element as h2
     ); 
 
     $("#start").remove();   // removes the start button once clicked
 
-    
+    scoreboard.prepend("<div class = 'away-fouls'>" + this.incorrect + "</div>");   // prepends away incorrect answers
+    scoreboard.prepend("<div class = 'home-fouls'>" + this.incorrect + "</div>");   // prepends home incorrent answers
+    scoreboard.prepend("<div class = 'away-score'>" + this.correct + "</div>");   // prepends away score
+    scoreboard.prepend("<div class = 'home-score'>" + this.correct + "</div>");   // prepends home score
+
+
+    panel.append("<button class = 'btn btn-warning heat-easy'><img class = 'heat-sm-logo' src = '../Images/heat-logo.png'>EASY (+1)</button>")
+    panel.append("<button class = 'btn btn-warning heat-medium'><img class = 'heat-sm-logo' src = '../Images/heat-logo.png'>MEDIUM (+2)</button>")
+    panel.append("<button class = 'btn btn-warning heat-high'><img class = 'heat-sm-logo' src = '../Images/heat-logo.png'>HARD (+3)</button>")
+
+
+
     // for (var i = 0; i < questions.length; i++) {
-      let random = Math.floor(Math.random()*questions.length);
-      // console.log("==================== ", questions[random]);
+
+
+
+      // let random = Math.floor(Math.random()*questions.length);
+      // panel.append("<h2>" + questions[random].question + "</h2>");
+      // for (var i = 0; i < questions[random].answers.length; i++) {
+      //   panel.append(
+      //     "<button id = 'answer' class= 'btn btn-warning answer' name='question-" +
+      //       i +
+      //       "' value='" +
+      //       questions[random].answers[i] +
+      //       "''>" +
+      //       questions[random].answers[i]
+      //   );
+
+
+      // }
+    // }
+
+    // panel.append("<button class='btn btn-dark' id='done'>Submit</button>");
+    let random = Math.floor(Math.random()*questions.length);
+
+    $('#quiz-area > button').click((e)=> {
+      if (e.currentTarget.value === questions[random].correctAnswer) {
+        this.correct++;
+        console.log(this)
+      } else {
+        this.incorrect++;
+      }
+      // game.done();
+    });
+
+    $('.heat-easy').click(()=>{
       panel.append("<h2>" + questions[random].question + "</h2>");
+      $("#quiz-area button").remove();
       for (var i = 0; i < questions[random].answers.length; i++) {
-        // console.log("==================== ", questions[random].answers[i]);
         panel.append(
           "<button id = 'answer' class= 'btn btn-warning answer' name='question-" +
             i +
@@ -444,19 +488,36 @@ class Game {
             "''>" +
             questions[random].answers[i]
         );
-      // }
-    }
-
-    // panel.append("<button class='btn btn-dark' id='done'>Submit</button>");
-
-    $('#quiz-area > button').click(function() {
-      if ($(this).val() === questions[random].correctAnswer) {
-        this.correct++;
-      } else {
-        this.incorrect++;
       }
-      // game.done();
-    });
+    })
+    $('.heat-medium').click(()=>{
+      panel.append("<h2>" + questions[random].question + "</h2>");
+      $("#quiz-area button").remove();
+      for (var i = 0; i < questions[random].answers.length; i++) {
+        panel.append(
+          "<button id = 'answer' class= 'btn btn-warning answer' name='question-" +
+            i +
+            "' value='" +
+            questions[random].answers[i] +
+            "''>" +
+            questions[random].answers[i]
+        );
+      }
+    })
+    $('.heat-hard').click(()=>{
+      panel.append("<h2>" + questions[random].question + "</h2>");
+      $("#quiz-area button").remove();
+      for (var i = 0; i < questions[random].answers.length; i++) {
+        panel.append(
+          "<button id = 'answer' class= 'btn btn-warning answer' name='question-" +
+            i +
+            "' value='" +
+            questions[random].answers[i] +
+            "''>" +
+            questions[random].answers[i]
+        );
+      }
+    })
   };
 
   done() {
@@ -500,14 +561,16 @@ class Game {
 
     $("#sub-wrapper h2").remove();
 
-    panel.html("<h2>All Done!</h2>");
-    panel.append("<h3>Correct Answers: " + this.correct + "</h3>");
-    panel.append("<h3>Incorrect Answers: " + this.incorrect + "</h3>");
-    panel.append(
-      "<h3>Unanswered: " +
-        (questions.length - (this.incorrect + this.correct)) +
-        "</h3>"
-    );
+
+
+    // panel.html("<h2>All Done!</h2>");
+    // panel.append("<h3>Correct Answers: " + this.correct + "</h3>");
+    // panel.append("<h3>Incorrect Answers: " + this.incorrect + "</h3>");
+    // panel.append(
+    //   "<h3>Unanswered: " +
+    //     (questions.length - (this.incorrect + this.correct)) +
+    //     "</h3>"
+    // );
   }
 };
 

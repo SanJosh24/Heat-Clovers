@@ -1,9 +1,12 @@
 h2 {
-  color: orangered;
+  color: forestgreen;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  text-align: center;
 }
 
 span {
-  color: orangered;
+  color: red;
 }
 
 .title {
@@ -33,12 +36,17 @@ span {
   /* background-color: rgba(255, 255, 255, 0.5); */
 }
 
+.quiz {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
 #quiz-area {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   /* background-color: rgba(0, 0, 0, 0.5); */
+  background-color: rgba(0, 0, 0, 0.75);
   width: 45vw;
 }
 
@@ -51,9 +59,75 @@ span {
 
 .blah {
   width: 25vw;
+  padding-bottom: 10vh;
 }
 
 .mainTitle {
   display: flex;
   justify-content: center;
+}
+/* 
+.heat-celt {
+  background-image: url(../Images/Screen\ Shot\ 2018-08-29\ at\ 11.43.23\ AM.png);
+  background-size: cover;
+} */
+.heat {
+  width: 35vh;
+  margin-left: 9vh;
+}
+
+.home-score {
+  font-family: 'Orbitron';
+  position: absolute;
+  width: 17.5vw;
+  height: 33.2vh;
+  color: green;
+  font-size: 6vh;
+}
+
+.away-score {
+  font-family: 'Orbitron';
+  position: absolute;
+  width: 30vw;
+  height: 33.2vh;
+  color: green;
+  font-size: 6vh;
+  padding-left: 23.6vw;
+}
+
+.away-fouls {
+  font-family: 'Orbitron';
+  position: absolute;
+  width: 30vw;
+  height: 33.2vh;
+  color: yellow;
+  font-size: 6vh;
+  padding-left: 22.25vw;
+  padding-top: 18vh;
+}
+
+.home-fouls {
+  font-family: 'Orbitron';
+  position: absolute;
+  width: 30vw;
+  height: 33.2vh;
+  color: yellow;
+  font-size: 6vh;
+  padding-left: 5vw;
+  padding-top: 18vh;
+}
+
+.shot-clock {
+  font-family: 'Orbitron';
+  position: absolute;
+  width: 30vw;
+  height: 33.2vh;
+  color: red;
+  font-size: 6vh;
+  padding-left: 13.5vw;
+  padding-top: 18vh;
+}
+
+.heat-sm-logo {
+  width: 1vw;
 }
