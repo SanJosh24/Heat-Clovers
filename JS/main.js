@@ -71,17 +71,6 @@ var easyQuestions = [
   },
   {
     question:
-      "What is the correct HTML for referring to an external style sheet?",
-    answers: [
-      "style src='mystyle.css'>",
-      "<stylesheet>mystyle.css</stylesheet>",
-      "<link rel='stylesheet' type='text/css' href='mystyle.css'>"
-    ],
-    correctAnswer: "<link rel='stylesheet' type='text/css' href='mystyle.css'>",
-    points: 1
-  },
-  {
-    question:
       "Where in an HTML document is the correct place to refer to an external style sheet?",
     answers: [
       "In the <head> section",
@@ -105,12 +94,12 @@ var easyQuestions = [
   },
   {
     question:
-      "What is the correct CSS syntax for making all the <p> elements bold?",
+      "What is the correct CSS syntax for making all the < p > elements bold?",
     answers: [
       "p {text-size:bold;}",
-      "< p style='text-size:bold;' >",
+      "p style='text-size:bold;",
       "p {font-weight:bold;}",
-      "< p style='font-size:bold;' >"
+      "p style='font-size:bold;'"
     ],
     correctAnswer: "p {font-weight:bold;}",
     points: 1
@@ -179,17 +168,6 @@ var mediumQuestions = [
       "< script href='xxx.js' >"
     ],
     correctAnswer: "< script src='xxx.js' >",
-    points: 2
-  },
-  {
-    question: "How do you write 'Hello World' in an alert box?",
-    answers: [
-      "alertBox('Hello World');",
-      "msg('Hello World');",
-      "msgBox('Hello World');",
-      "alert('Hello World');"
-    ],
-    correctAnswer: "alert('Hello World');",
     points: 2
   },
   {
@@ -595,12 +573,11 @@ class Game {
       $("#quiz-area button").remove();
       for (var i = 0; i < mediumQuestions[randomMedium].answers.length; i++) {
         panel.append(
-          "<button id = 'answer' class= 'btn btn-warning answer' name='question-" +
-            i +
-            "' value='" +
-            mediumQuestions[randomMedium].answers[i] +
-            "''>" +
+          `<button onclick='checkCorrectAnswer(game, "${mediumQuestions[randomMedium].answers[i]}")' id='answer${i}' class='answerBtn btn btn-warning answer' name='question-${i}' value='${
             mediumQuestions[randomMedium].answers[i]
+          } '> <img class='heat-sm-logo' src='../Images/heat-logo.png' /> ${
+            mediumQuestions[randomMedium].answers[i]
+          } </button>`
         );
       }
     });
@@ -610,12 +587,11 @@ class Game {
       $("#quiz-area button").remove();
       for (var i = 0; i < hardQuestions[randomHard].answers.length; i++) {
         panel.append(
-          "<button id = 'answer' class= 'btn btn-warning answer' name='question-" +
-            i +
-            "' value='" +
-            hardQuestions[randomHard].answers[i] +
-            "''>" +
+          `<button onclick='checkCorrectAnswer(game, "${hardQuestions[randomHard].answers[i]}")' id='answer${i}' class='answerBtn btn btn-warning answer' name='question-${i}' value='${
             hardQuestions[randomHard].answers[i]
+          } '> <img class='heat-sm-logo' src='../Images/heat-logo.png' /> ${
+            hardQuestions[randomHard].answers[i]
+          } </button>`
         );
       }
     });
@@ -644,12 +620,11 @@ class Game {
       $("#quiz-area button").remove();
       for (var i = 0; i < mediumQuestions[randomMedium].answers.length; i++) {
         panel.append(
-          "<button id = 'answer' class= 'btn btn-success answer' name='question-" +
-            i +
-            "' value='" +
-            mediumQuestions[randomMedium].answers[i] +
-            "''>" +
+          `<button onclick='checkCorrectAnswer(game, "${mediumQuestions[randomMedium].answers[i]}")' id='answer${i}' class='answerBtn btn btn-success answer' name='question-${i}' value='${
             mediumQuestions[randomMedium].answers[i]
+          } '> <img class='celtic-sm-logo' src='../Images/boston-celtics-logo-vector-400x400.png' /> ${
+            mediumQuestions[randomMedium].answers[i]
+          } </button>`
         );
       }
     });
@@ -659,12 +634,11 @@ class Game {
       $("#quiz-area button").remove();
       for (var i = 0; i < hardQuestions[randomHard].answers.length; i++) {
         panel.append(
-          "<button id = 'answer' class= 'btn btn-success answer' name='question-" +
-            i +
-            "' value='" +
-            hardQuestions[randomHard].answers[i] +
-            "''>" +
+          `<button onclick='checkCorrectAnswer(game, "${hardQuestions[randomHard].answers[i]}")' id='answer${i}' class='answerBtn btn btn-success answer' name='question-${i}' value='${
             hardQuestions[randomHard].answers[i]
+          } '> <img class='celtic-sm-logo' src='../Images/boston-celtics-logo-vector-400x400.png' /> ${
+            hardQuestions[randomHard].answers[i]
+          } </button>`
         );
       }
     });
@@ -765,39 +739,13 @@ class Game {
   // }
 
   done() {
-    // $.each($("input[name='question-0']:checked"), function() {
-    //   if ($(this).val() === questions[random].correctAnswer) {
-    //     this.correct++;
-    //   } else {
-    //     this.incorrect++;
-    //   }
-    // });
-
-    // $.each($("input[name='question-1']:checked"), function() {
-    //   if ($(this).val() === questions[1].correctAnswer) {
-    //     this.correct++;
-    //   } else {
-    //     this.incorrect++;
-    //   }
-    // });
-
-    // $.each($("input[name='question-2']:checked"), function() {
-    //   if ($(this).val() === questions[2].correctAnswer) {
-    //     this.correct++;
-    //   } else {
-    //     this.incorrect++;
-    //   }
-    // });
-
-    // $.each($("input[name='question-3']:checked"), function() {
-    //   if ($(this).val() === questions[3].correctAnswer) {
-    //     this.correct++;
-    //   } else {
-    //     this.incorrect++;
-    //   }
-    // });
-
-    // this.result();
+    if (this.homeScore = 1) {
+      console.log("hi")
+      // alert("Miami Heat wins the game!")
+    }
+    if (this.awayScore) {
+      return alert("Boston Celtics win the game!")
+    }
   }
 
   result() {
