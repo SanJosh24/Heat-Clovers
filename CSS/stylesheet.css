@@ -17,7 +17,7 @@ span {
 }
 
 .img-fluid {
-  background-image: url(../images/1531404.jpg);
+  background-image: url('../Images/1531404.jpg');
   background-size: cover;
   height: 100vh;
 }
