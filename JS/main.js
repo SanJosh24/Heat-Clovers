@@ -654,41 +654,62 @@ class Game {
       if(this.heatTurn === true){
 
         if (
-          theValue === this.theEasyAnswer ||
-          theValue === this.theMediumAnswer ||
-          theValue === this.theHardAnswer
+          theValue === this.theEasyAnswer
+          // theValue === this.theMediumAnswer ||
+          // theValue === this.theHardAnswer
         ) {
-          console.log("answer is correct");
           // this.correct++;
           this.homeScore+=1;
           $(".home-score").html(this.homeScore);
-          console.log(this);
+          this.heatTurn = false;
+          nextTeam();
+          return true;
+        } if (
+          theValue === this.theMediumAnswer
+        ) {
+          this.homeScore+=2;
+          $(".home-score").html(this.homeScore);
+          this.heatTurn = false;
+          nextTeam();
+          return true;
+        } if (
+          theValue === this.theHardAnswer
+        ) {
+          this.homeScore+=3;
+          $(".home-score").html(this.homeScore);
           this.heatTurn = false;
           nextTeam();
           return true;
         } else {
           this.homeFoul+=1;
           $(".home-fouls").html(this.homeFoul);
-          console.log(this);
           // this.incorrect++;
           this.heatTurn = false;
           nextTeam();
           return false;
         }
       } else {
-
-        
-        
         if (
-          theValue === this.theEasyAnswer ||
-          theValue === this.theMediumAnswer ||
-          theValue === this.theHardAnswer
+          theValue === this.theEasyAnswer
         ) {
-          console.log("answer is wrong");
-          // this.correct++;
           this.awayScore+=1;
           $(".away-score").html(this.awayScore);
-          console.log(this);
+          this.heatTurn = true;
+          heatTeam();
+          return true;
+        } if (
+          theValue === this.theMediumAnswer
+        ) {
+          this.awayScore+=2;
+          $(".away-score").html(this.awayScore);
+          this.heatTurn = true;
+          heatTeam();
+          return true;
+        } if (
+          theValue === this.theHardAnswer
+        ) {
+          this.awayScore+=3;
+          $(".away-score").html(this.awayScore);
           this.heatTurn = true;
           heatTeam();
           return true;
@@ -739,9 +760,7 @@ class Game {
   // }
 
   done() {
-    if (this.homeScore = 1) {
-      console.log("hi")
-      // alert("Miami Heat wins the game!")
+    if (this.homeScore >= 5) {
     }
     if (this.awayScore) {
       return alert("Boston Celtics win the game!")
