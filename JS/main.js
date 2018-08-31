@@ -363,17 +363,17 @@ var hardQuestions = [
     correctAnswer: "10 days",
     points: 3
   },
-  {
-    question: "What is the correct way to write a JavaScript array?",
-    answers: [
-      "var colors = ['red', 'green', 'blue']",
-      "var colors = (1:'red', 2:'green', 3:'blue')",
-      "var colors = 1 = ('red'), 2 = ('green'), 3 = ('blue')",
-      "var colors = 'red', 'green', 'blue'"
-    ],
-    correctAnswer: "var colors = ['red', 'green', 'blue']",
-    points: 3
-  },
+  // {
+  //   question: "What is the correct way to write a JavaScript array?",
+  //   answers: [
+  //     "var colors = ['red', 'green', 'blue']",
+  //     "var colors = (1:'red', 2:'green', 3:'blue')",
+  //     "var colors = 1 = ('red'), 2 = ('green'), 3 = ('blue')",
+  //     "var colors = 'red', 'green', 'blue'"
+  //   ],
+  //   correctAnswer: "var colors = ['red', 'green', 'blue']",
+  //   points: 3
+  // },
   {
     question: "How do you round the number 7.25, to the nearest integer?",
     answers: ["round(7.25)", "rnd(7.25)", "Math.rnd(7.25)", "Math.round(7.25)"],
@@ -633,8 +633,8 @@ class Game {
           "<div class = 'gif'><img class = 'free-throw-gif' src = '../Images/made-ft.gif'/></div>"
         );
         this.heatTurn = false;
-        // scoreboard2.empty();
         nextTeam();
+        this.done();
         return true;
       }
       if (theValue === this.theMediumAnswer) {
@@ -645,6 +645,7 @@ class Game {
         );
         this.heatTurn = false;
         nextTeam();
+        this.done();
         return true;
       }
       if (theValue === this.theHardAnswer) {
@@ -655,6 +656,7 @@ class Game {
         );
         this.heatTurn = false;
         nextTeam();
+        this.done();
         return true;
       } else {
         this.homeFoul += 1;
@@ -664,6 +666,7 @@ class Game {
         );
         this.heatTurn = false;
         nextTeam();
+        this.done();
         return false;
       }
     } else {
@@ -675,6 +678,7 @@ class Game {
         );
         this.heatTurn = true;
         heatTeam();
+        this.done();
         return true;
       }
       if (theValue === this.theMediumAnswer) {
@@ -685,6 +689,7 @@ class Game {
         );
         this.heatTurn = true;
         heatTeam();
+        this.done();
         return true;
       }
       if (theValue === this.theHardAnswer) {
@@ -695,6 +700,7 @@ class Game {
         );
         this.heatTurn = true;
         heatTeam();
+        this.done();
         return true;
       } else {
         this.awayFoul += 1;
@@ -704,14 +710,28 @@ class Game {
         );
         this.heatTurn = true;
         heatTeam();
+        this.done();
         return false;
       }
     }
   }
   done() {
-    if ((this.homeScore = 5)) {
-    } else {
-      return alert("Boston Celtics win the game!");
+    if (this.homeScore >= 5) {
+      panel.empty();
+      panel.append(
+        "<div class = 'gif'><img src = '../Images/Heat-Win.gif'/></div>"
+      );
+      panel.prepend(
+        "<div class = 'gif'><img class = 'heat-win-text' src = '../HeatWinText.gif'/></div>"
+      );
+    } if (this.awayScore >= 5) {
+      panel.empty();
+      panel.append(
+        "<div class = 'gif'><img src = '../Images/celticswin.gif'/></div>"
+      );
+      panel.prepend(
+        "<div class = 'gif'><img class = 'celtic-win-text' src = '../spanked-lebron.gif'/></div>"
+      );
     }
   }
 
