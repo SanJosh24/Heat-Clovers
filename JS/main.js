@@ -26,7 +26,7 @@ var easyQuestions = [
     points: 1
   },
   {
-    question: "The external JavaScript file must contain the <script> tag.",
+    question: "The external JavaScript file must contain the < script > tag.",
     answers: ["False", "True"],
     correctAnswer: "False",
     points: 1
@@ -45,7 +45,7 @@ var easyQuestions = [
     question: "How can you add a comment in a JavaScript?",
     answers: [
       "'This is a comment",
-      "<!--This is a comment-->",
+      "< !--This is a comment-- >",
       "//This is a comment"
     ],
     correctAnswer: "//This is a comment",
@@ -160,17 +160,6 @@ var mediumQuestions = [
     points: 2
   },
   {
-    question:
-      "What is the correct syntax for referring to an external script called 'xxx.js'?",
-    answers: [
-      "< script name='xxx.js' >",
-      "< script src='xxx.js' >",
-      "< script href='xxx.js' >"
-    ],
-    correctAnswer: "< script src='xxx.js' >",
-    points: 2
-  },
-  {
     question: "How do you create a function in JavaScript?",
     answers: [
       "function myFunction()",
@@ -239,7 +228,7 @@ var mediumQuestions = [
     points: 2
   },
   {
-    question: "How do you add a background color for all <h1> elements?",
+    question: "How do you add a background color for all < h1 > elements?",
     answers: [
       "h1.all {background-color:#FFFFFF;}",
       "all.h1 {background-color:#FFFFFF;}",
@@ -435,8 +424,8 @@ var hardQuestions = [
 // Variable that will hold the setInterval
 
 function heatTeam() {
-  $('.answerBtn').remove();
-  $('h2').remove();
+  $(".answerBtn").remove();
+  $("h2").remove();
 
   panel.append(
     "<button class = 'btn btn-warning heat-easy'><img class = 'heat-sm-logo' src = '../Images/heat-logo.png'>EASY (+1)</button>"
@@ -448,13 +437,12 @@ function heatTeam() {
     "<button class = 'btn btn-warning heat-hard'><img class = 'heat-sm-logo' src = '../Images/heat-logo.png'>HARD (+3)</button>"
   );
 
-  game.start()
+  game.start();
 }
 
 function nextTeam() {
-
-  $('.answerBtn').remove();
-  $('h2').remove();
+  $(".answerBtn").remove();
+  $("h2").remove();
 
   panel.append(
     "<button class = 'btn btn-success celtic-easy'><img class = 'celtic-sm-logo' src = '../Images/boston-celtics-logo-vector-400x400.png'>EASY (+1)</button>"
@@ -467,13 +455,12 @@ function nextTeam() {
   );
 
   game.start();
-
 }
 
 class Game {
   constructor() {
     // this.incorrect = 0;
-    this.counter = 24;
+    this.counter = 10;
     // this.correct = 0;
     this.homeScore = 0;
     this.homeFoul = 0;
@@ -488,78 +475,49 @@ class Game {
     var timer = setInterval(() => {
       this.counter--;
       $("#counter-number").html(this.counter);
-      if (this.counter === 0) {
-        console.log("TIME UP");
-        this.done();
-        this.timer = clearInterval();
+      if (this.counter === 0 && this.heatTurn == true) {
+        // this.done();
+        nextTeam();
+        this.timer = clearInterval(timer);
       }
-    }, 1000);
-  }
+      if (this.counter === 0 && this.heatTurn == false){
+        heatTeam();
+        this.timer = clearInterval(timer);
+      }
+    }, 1000)
+  };
   start() {
-
     scoreboard.prepend(
-      "<div class = 'shot-clock'><span id='counter-number'>24</span></div>" // inputing time remainder element as h2
+      `<div class = 'shot-clock'><span id='counter-number'></span></div>` // inputing time remainder element as h2
     );
 
     $("#start").remove(); // removes the start button once clicked
 
+    scoreboard.prepend("<div class = 'away-fouls'>" + this.awayFoul + "</div>"); // prepends away incorrect answers
+    scoreboard.prepend("<div class = 'home-fouls'>" + this.homeFoul + "</div>"); // prepends home incorrent answers
     scoreboard.prepend(
-      "<div class = 'away-fouls'>" + this.awayFoul + "</div>"
-    ); // prepends away incorrect answers
+      "<div class = 'away-score'>" + this.awayScore + "</div>"
+    ); // prepends away score
     scoreboard.prepend(
-      "<div class = 'home-fouls'>" + this.homeFoul + "</div>"
-    ); // prepends home incorrent answers
-    scoreboard.prepend("<div class = 'away-score'>" + this.awayScore + "</div>"); // prepends away score
-    scoreboard.prepend("<div class = 'home-score'>" + this.homeScore + "</div>"); // prepends home score
-
-    // panel.append(
-    //   "<button class = 'btn btn-warning heat-easy'><img class = 'heat-sm-logo' src = '../Images/heat-logo.png'>EASY (+1)</button>"
-    // );
-    // panel.append(
-    //   "<button class = 'btn btn-warning heat-medium'><img class = 'heat-sm-logo' src = '../Images/heat-logo.png'>MEDIUM (+2)</button>"
-    // );
-    // panel.append(
-    //   "<button class = 'btn btn-warning heat-hard'><img class = 'heat-sm-logo' src = '../Images/heat-logo.png'>HARD (+3)</button>"
-    // );
-
-    // for (var i = 0; i < questions.length; i++) {
-
-    // let random = Math.floor(Math.random()*questions.length);
-    // panel.append("<h2>" + questions[random].question + "</h2>");
-    // for (var i = 0; i < questions[random].answers.length; i++) {
-    //   panel.append(
-    //     "<button id = 'answer' class= 'btn btn-warning answer' name='question-" +
-    //       i +
-    //       "' value='" +
-    //       questions[random].answers[i] +
-    //       "''>" +
-    //       questions[random].answers[i]
-    //   );
-
-    // }
-    // }
+      "<div class = 'home-score'>" + this.homeScore + "</div>"
+    ); // prepends home score
 
     // panel.append("<button class='btn btn-dark' id='done'>Submit</button>");
     let randomEasy = Math.floor(Math.random() * easyQuestions.length);
     let randomMedium = Math.floor(Math.random() * mediumQuestions.length);
     let randomHard = Math.floor(Math.random() * hardQuestions.length);
-    // var homeScore = 0;
-    // var homeFoul = 0;
-    // var awayScore = 0;
-    // var awayFoul = 0;
-
-    // $('#quiz-area > button').click((e)=> {
-
-    // });
 
     $(".heat-easy").click(() => {
-      console.log('jgjkgkjgkgkgkgkgkgkgkgkgkgkgk')
+      this.countdown();
       this.theEasyAnswer = easyQuestions[randomEasy].correctAnswer;
       panel.append("<h2>" + easyQuestions[randomEasy].question + "</h2>");
+      $("#quiz-area img").remove();
       $("#quiz-area button").remove();
       for (var i = 0; i < easyQuestions[randomEasy].answers.length; i++) {
         panel.append(
-          `<button onclick='checkCorrectAnswer(game, "${easyQuestions[randomEasy].answers[i]}")' id='answer${i}' class='answerBtn btn btn-warning answer' name='question-${i}' value='${
+          `<button onclick='checkCorrectAnswer(game, "${
+            easyQuestions[randomEasy].answers[i]
+          }")' id='answer${i}' class='answerBtn btn btn-warning answer' name='question-${i}' value='${
             easyQuestions[randomEasy].answers[i]
           } '> <img class='heat-sm-logo' src='../Images/heat-logo.png' /> ${
             easyQuestions[randomEasy].answers[i]
@@ -570,10 +528,13 @@ class Game {
     $(".heat-medium").click(() => {
       this.theMediumAnswer = mediumQuestions[randomMedium].correctAnswer;
       panel.append("<h2>" + mediumQuestions[randomMedium].question + "</h2>");
+      $("#quiz-area img").remove();
       $("#quiz-area button").remove();
       for (var i = 0; i < mediumQuestions[randomMedium].answers.length; i++) {
         panel.append(
-          `<button onclick='checkCorrectAnswer(game, "${mediumQuestions[randomMedium].answers[i]}")' id='answer${i}' class='answerBtn btn btn-warning answer' name='question-${i}' value='${
+          `<button onclick='checkCorrectAnswer(game, "${
+            mediumQuestions[randomMedium].answers[i]
+          }")' id='answer${i}' class='answerBtn btn btn-warning answer' name='question-${i}' value='${
             mediumQuestions[randomMedium].answers[i]
           } '> <img class='heat-sm-logo' src='../Images/heat-logo.png' /> ${
             mediumQuestions[randomMedium].answers[i]
@@ -584,10 +545,13 @@ class Game {
     $(".heat-hard").click(() => {
       this.theHardAnswer = hardQuestions[randomHard].correctAnswer;
       panel.append("<h2>" + hardQuestions[randomHard].question + "</h2>");
+      $("#quiz-area img").remove();
       $("#quiz-area button").remove();
       for (var i = 0; i < hardQuestions[randomHard].answers.length; i++) {
         panel.append(
-          `<button onclick='checkCorrectAnswer(game, "${hardQuestions[randomHard].answers[i]}")' id='answer${i}' class='answerBtn btn btn-warning answer' name='question-${i}' value='${
+          `<button onclick='checkCorrectAnswer(game, "${
+            hardQuestions[randomHard].answers[i]
+          }")' id='answer${i}' class='answerBtn btn btn-warning answer' name='question-${i}' value='${
             hardQuestions[randomHard].answers[i]
           } '> <img class='heat-sm-logo' src='../Images/heat-logo.png' /> ${
             hardQuestions[randomHard].answers[i]
@@ -595,17 +559,16 @@ class Game {
         );
       }
     });
-
-    console.log('dkahkdhak: ', $(".celtic-easy"))
-
     $(".celtic-easy").click(() => {
-      console.log("hello")
       this.theEasyAnswer = easyQuestions[randomEasy].correctAnswer;
       panel.append("<h2>" + easyQuestions[randomEasy].question + "</h2>");
+      $("#quiz-area img").remove();
       $("#quiz-area button").remove();
       for (var i = 0; i < easyQuestions[randomEasy].answers.length; i++) {
         panel.append(
-          `<button onclick='checkCorrectAnswer(game, "${easyQuestions[randomEasy].answers[i]}")' id='answer${i}' class='answerBtn btn btn-success answer' name='question-${i}' value='${
+          `<button onclick='checkCorrectAnswer(game, "${
+            easyQuestions[randomEasy].answers[i]
+          }")' id='answer${i}' class='answerBtn btn btn-success answer' name='question-${i}' value='${
             easyQuestions[randomEasy].answers[i]
           } '> <img class='celtic-sm-logo' src='../Images/boston-celtics-logo-vector-400x400.png' /> ${
             easyQuestions[randomEasy].answers[i]
@@ -614,13 +577,15 @@ class Game {
       }
     });
     $(".celtic-medium").click(() => {
-      console.log("hello")
       this.theMediumAnswer = mediumQuestions[randomMedium].correctAnswer;
       panel.append("<h2>" + mediumQuestions[randomMedium].question + "</h2>");
+      $("#quiz-area img").remove();
       $("#quiz-area button").remove();
       for (var i = 0; i < mediumQuestions[randomMedium].answers.length; i++) {
         panel.append(
-          `<button onclick='checkCorrectAnswer(game, "${mediumQuestions[randomMedium].answers[i]}")' id='answer${i}' class='answerBtn btn btn-success answer' name='question-${i}' value='${
+          `<button onclick='checkCorrectAnswer(game, "${
+            mediumQuestions[randomMedium].answers[i]
+          }")' id='answer${i}' class='answerBtn btn btn-success answer' name='question-${i}' value='${
             mediumQuestions[randomMedium].answers[i]
           } '> <img class='celtic-sm-logo' src='../Images/boston-celtics-logo-vector-400x400.png' /> ${
             mediumQuestions[randomMedium].answers[i]
@@ -631,139 +596,94 @@ class Game {
     $(".celtic-hard").click(() => {
       this.theHardAnswer = hardQuestions[randomHard].correctAnswer;
       panel.append("<h2>" + hardQuestions[randomHard].question + "</h2>");
+      $("#quiz-area img").remove();
       $("#quiz-area button").remove();
       for (var i = 0; i < hardQuestions[randomHard].answers.length; i++) {
         panel.append(
-          `<button onclick='checkCorrectAnswer(game, "${hardQuestions[randomHard].answers[i]}")' id='answer${i}' class='answerBtn btn btn-success answer' name='question-${i}' value='${
+          `<button onclick='checkCorrectAnswer(game, "${
+            hardQuestions[randomHard].answers[i]
+          }")' id='answer${i}' class='answerBtn btn btn-success answer' name='question-${i}' value='${
             hardQuestions[randomHard].answers[i]
           } '> <img class='celtic-sm-logo' src='../Images/boston-celtics-logo-vector-400x400.png' /> ${
             hardQuestions[randomHard].answers[i]
           } </button>`
         );
-      }
+      } 
     });
-
-
   }
-
   checkAnswer(theValue) {
-
-    console.log("checking answer =================== ", this.theEasyAnswer);
-    console.log("checking value >>>>>>>>>>>>>>>>>>>> ", theValue)
-
-      if(this.heatTurn === true){
-
-        if (
-          theValue === this.theEasyAnswer
-          // theValue === this.theMediumAnswer ||
-          // theValue === this.theHardAnswer
-        ) {
-          // this.correct++;
-          this.homeScore+=1;
-          $(".home-score").html(this.homeScore);
-          this.heatTurn = false;
-          nextTeam();
-          return true;
-        } if (
-          theValue === this.theMediumAnswer
-        ) {
-          this.homeScore+=2;
-          $(".home-score").html(this.homeScore);
-          this.heatTurn = false;
-          nextTeam();
-          return true;
-        } if (
-          theValue === this.theHardAnswer
-        ) {
-          this.homeScore+=3;
-          $(".home-score").html(this.homeScore);
-          this.heatTurn = false;
-          nextTeam();
-          return true;
-        } else {
-          this.homeFoul+=1;
-          $(".home-fouls").html(this.homeFoul);
-          // this.incorrect++;
-          this.heatTurn = false;
-          nextTeam();
-          return false;
-        }
+    if (this.heatTurn === true) {
+      if (
+        theValue === this.theEasyAnswer
+      ) {
+        this.homeScore += 1;
+        $(".home-score").html(this.homeScore);
+        panel.append("<div class = 'gif'><img src = '../Images/made-ft.gif'/></div>");
+        this.heatTurn = false;
+        nextTeam();
+        return true;
+      }
+      if (theValue === this.theMediumAnswer) {
+        this.homeScore += 2;
+        $(".home-score").html(this.homeScore);
+        panel.append("<div class = 'gif'><img src = '../Images/heat-made-2pointer.gif'/></div>");
+        this.heatTurn = false;
+        nextTeam();
+        return true;
+      }
+      if (theValue === this.theHardAnswer) {
+        this.homeScore += 3;
+        $(".home-score").html(this.homeScore);
+        panel.append("<div class = 'gif'><img src = '../Images/heat3pointer.gif'/></div>");
+        this.heatTurn = false;
+        nextTeam();
+        return true;
       } else {
-        if (
-          theValue === this.theEasyAnswer
-        ) {
-          this.awayScore+=1;
-          $(".away-score").html(this.awayScore);
-          this.heatTurn = true;
-          heatTeam();
-          return true;
-        } if (
-          theValue === this.theMediumAnswer
-        ) {
-          this.awayScore+=2;
-          $(".away-score").html(this.awayScore);
-          this.heatTurn = true;
-          heatTeam();
-          return true;
-        } if (
-          theValue === this.theHardAnswer
-        ) {
-          this.awayScore+=3;
-          $(".away-score").html(this.awayScore);
-          this.heatTurn = true;
-          heatTeam();
-          return true;
-        } else {
-          this.awayFoul+=1;
-          $(".away-fouls").html(this.awayFoul);
-          // this.incorrect++;
-          this.heatTurn = true;
-          heatTeam();
-          return false;
-        }
+        this.homeFoul += 1;
+        $(".home-fouls").html(this.homeFoul);
+        panel.append("<div class = 'gif'><img src = '../Images/heat-missed-2pointer-1.gif'/></div>");
+        this.heatTurn = false;
+        nextTeam();
+        return false;
+      }
+    } else {
+      if (theValue === this.theEasyAnswer) {
+        this.awayScore += 1;
+        $(".away-score").html(this.awayScore);
+        panel.append("<div class = 'gif'><img src = '../Images/made-ft.gif'/></div>");
+        this.heatTurn = true;
+        heatTeam();
+        return true;
+      }
+      if (theValue === this.theMediumAnswer) {
+        this.awayScore += 2;
+        $(".away-score").html(this.awayScore);
+        panel.append("<div class = 'gif'><img src = '../Images/celtics-2pointer.gif'/></div>");
+        this.heatTurn = true;
+        heatTeam();
+        return true;
+      }
+      if (theValue === this.theHardAnswer) {
+        this.awayScore += 3;
+        $(".away-score").html(this.awayScore);
+        panel.append("<div class = 'gif'><img src = '../Images/celtics-3pointer-make.gif'/></div>");
+        this.heatTurn = true;
+        heatTeam();
+        return true;
+      } else {
+        this.awayFoul += 1;
+        $(".away-fouls").html(this.awayFoul);
+        panel.append("<div class = 'gif'><img src = '../Images/celtics-missed-2pointer.gif'/></div>");
+        this.heatTurn = true;
+        heatTeam();
+        return false;
       }
     }
-
-  // document.querySelector("#quiz-area > button").addEventListener("click", this.checkCorrectAnswer);
-
-  // checkCorrectAnswer(gameObject) {
-  //   console.log("checking answer !!!!");
-  //   if($('answerBtn').hasClass('heat-sm-logo')) {
-
-  //     if (e.currentTarget.value === easyQuestions[randomEasy].correctAnswer || e.currentTarget.value === mediumQuestions[randomMedium].correctAnswer || e.currentTarget.value === hardQuestions[randomHard].correctAnswer) {
-  //       gameObject.correct++;
-  //       homeScore++
-  //       $('.home-score').html(homeScore);
-  //       console.log(gameObject)
-  //       return true;
-  //     } else {
-  //       homeFoul++
-  //       $('.home-foul').html(homeFoul);
-  //       // gameObject.incorrect++;
-  //       return false;
-  //     }
-  //   }
-  //   if ($('answerBtn').hasClass('celtics-sm-logo')){
-  //     if (e.currentTarget.value === easyQuestions[randomEasy].correctAnswer || e.currentTarget.value === mediumQuestions[randomMedium].correctAnswer || e.currentTarget.value === hardQuestions[randomHard].correctAnswer) {
-  //       this.correct++;
-  //       awayScore++
-  //       $('.away-score').html(awayScore);
-  //       console.log(this)
-  //       return true;
-  //     } else {
-  //       awayFoul++
-  //       $('.away-foul').html(awayFoul);
-  //       // this.incorrect++;
-  //       return false;
-  //     }
-  //   }
-  // }
-
+  }
   done() {
-    if (this.homeScore >= 5) {
-    }
-    if (this.awayScore) {
-      return alert("Boston Celtics win the game!")
+    if (this.homeScore = 5) {
+    } else {
+      return alert("Boston Celtics win the game!");
     }
   }
 
@@ -773,104 +693,9 @@ class Game {
       this.correct++;
     }
     $("#sub-wrapper h2").remove();
-
-    // panel.html("<h2>All Done!</h2>");
-    // panel.append("<h3>Correct Answers: " + this.correct + "</h3>");
-    // panel.append("<h3>Incorrect Answers: " + this.incorrect + "</h3>");
-    // panel.append(
-    //   "<h3>Unanswered: " +
-    //     (questions.length - (this.incorrect + this.correct)) +
-    //     "</h3>"
-    // );
   }
 }
 function checkCorrectAnswer(gameObject, theValue) {
-  console.log("the game object :::::::::::::: ", gameObject);
+  // console.log("the game object :::::::::::::: ", gameObject);
   gameObject.checkAnswer(theValue);
-
-
-  // if ($("answerBtn").hasClass("heat-sm-logo")) {
-  //   if (
-  //     theValue === easyQuestions[randomEasy].correctAnswer ||
-  //     theValue === mediumQuestions[randomMedium].correctAnswer ||
-  //     theValue === hardQuestions[randomHard].correctAnswer
-  //   ) {
-  //     // gameObject.correct++;
-  //     gameObject.homeScore+=1;
-  //     $(".home-score").html(homeScore);
-  //     console.log(gameObject);
-  //     return true;
-  //   } else {
-  //     gameObject.homeFoul+=1;
-  //     $(".home-foul").html(homeFoul);
-  //     // gameObject.incorrect++;
-  //     return false;
-  //   }
-  // }
-  // if ($("answerBtn").hasClass("celtics-sm-logo")) {
-  //   if (
-  //     theValue === easyQuestions[randomEasy].correctAnswer ||
-  //     theValue === mediumQuestions[randomMedium].correctAnswer ||
-  //     theValue === hardQuestions[randomHard].correctAnswer
-  //   ) {
-  //     // gameObject.correct++;
-  //     gameObject.awayScore+=1;
-  //     $(".away-score").html(awayScore);
-  //     console.log(gameObject);
-  //     return true;
-  //   } else {
-  //     gameObject.awayFoul+=1;
-  //     $(".away-foul").html(awayFoul);
-  //     // gameObject.incorrect++;
-  //     return false;
-  //   }
-  // }
 }
-// function nextTeam() {
-
-//   $('.answerBtn').remove();
-//   $('h2').remove();
-
-//   panel.append(
-//     "<button class = 'btn btn-success celtic-easy'><img class = 'celtic-sm-logo' src = '../Images/boston-celtics-logo-vector-400x400.png'>EASY (+1)</button>"
-//   );
-//   panel.append(
-//     "<button class = 'btn btn-success celtic-medium'><img class = 'celtic-sm-logo' src = '../Images/boston-celtics-logo-vector-400x400.png'>MEDIUM (+2)</button>"
-//   );
-//   panel.append(
-//     "<button class = 'btn btn-success celtic-hard'><img class = 'celtic-sm-logo' src = '../Images/boston-celtics-logo-vector-400x400.png'>HARD (+3)</button>"
-//   );
-// }
-
-// function nextTeam() {
-//   panel.append(
-//     "<button class = 'btn btn-success celtic-easy'><img class = 'celtic-sm-logo' src = '../Images/boston-celtics-logo-vector-400x400.png'>EASY (+1)</button>"
-//   );
-//   panel.append(
-//     "<button class = 'btn btn-success celtic-medium'><img class = 'celtic-sm-logo' src = '../Images/boston-celtics-logo-vector-400x400.png'>MEDIUM (+2)</button>"
-//   );
-//   panel.append(
-//     "<button class = 'btn btn-success celtic-hard'><img class = 'celtic-sm-logo' src = '../Images/boston-celtics-logo-vector-400x400.png'>HARD (+3)</button>"
-//   );
-// }
-
-// lines 449-533
-// function pickQuest(){
-//   var  random = math.floor(math.random)*myQuestions.length
-
-//     ("#quiz").HTML(myQuestions[random].prompt)
-//     for (var i = 0; i < myQuestions[random].answers.length; i++){
-//       // $(`.Ans[${i}].HTML(QuestArray[${Random}]Ans[${i}])`)
-
-//     }
-
-//   }
-// var score= 0;
-// // for(var i=0; i<myQuestions.length; i++);
-// var response= window.prompt(questions[i].prompt(questions[i].prompt))
-// if (response == questions[i].correctAnswer){
-//   score++;
-//   alert("Correct!");
-// } else{
-//   alert("Wrong");
-// }
