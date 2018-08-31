@@ -146,19 +146,19 @@ var mediumQuestions = [
     correctAnswer: "< script >",
     points: 2
   },
-  {
-    question:
-      "What is the correct JavaScript syntax to change the content of the HTML element below?",
-    answers: [
-      "document.getElement('p').innerHTML = 'Hello World!';",
-      "document.getElementByName('p').innerHTML = 'Hello World!';",
-      "#demo.innerHTML = 'Hello World!';",
-      "document.getElementById('demo').innerHTML = 'Hello World!';"
-    ],
-    correctAnswer:
-      "document.getElementById('demo').innerHTML = 'Hello World!';",
-    points: 2
-  },
+  // {
+  //   question:
+  //     "What is the correct JavaScript syntax to change the content of the HTML element below?",
+  //   answers: [
+  //     "document.getElement('p').innerHTML = 'Hello World!';",
+  //     "document.getElementByName('p').innerHTML = 'Hello World!';",
+  //     "#demo.innerHTML = 'Hello World!';",
+  //     "document.getElementById('demo').innerHTML = 'Hello World!';"
+  //   ],
+  //   correctAnswer:
+  //     "document.getElementById('demo').innerHTML = 'Hello World!';",
+  //   points: 2
+  // },
   {
     question: "How do you create a function in JavaScript?",
     answers: [
@@ -480,12 +480,12 @@ class Game {
         nextTeam();
         this.timer = clearInterval(timer);
       }
-      if (this.counter === 0 && this.heatTurn == false){
+      if (this.counter === 0 && this.heatTurn == false) {
         heatTeam();
         this.timer = clearInterval(timer);
       }
-    }, 1000)
-  };
+    }, 1000);
+  }
   start() {
     scoreboard.prepend(
       `<div class = 'shot-clock'><span id='counter-number'></span></div>` // inputing time remainder element as h2
@@ -608,17 +608,17 @@ class Game {
             hardQuestions[randomHard].answers[i]
           } </button>`
         );
-      } 
+      }
     });
   }
   checkAnswer(theValue) {
     if (this.heatTurn === true) {
-      if (
-        theValue === this.theEasyAnswer
-      ) {
+      if (theValue === this.theEasyAnswer) {
         this.homeScore += 1;
         $(".home-score").html(this.homeScore);
-        panel.append("<div class = 'gif'><img src = '../Images/made-ft.gif'/></div>");
+        panel.append(
+          "<div class = 'gif'><img src = '../Images/made-ft.gif'/></div>"
+        );
         this.heatTurn = false;
         nextTeam();
         return true;
@@ -626,7 +626,9 @@ class Game {
       if (theValue === this.theMediumAnswer) {
         this.homeScore += 2;
         $(".home-score").html(this.homeScore);
-        panel.append("<div class = 'gif'><img src = '../Images/heat-made-2pointer.gif'/></div>");
+        panel.append(
+          "<div class = 'gif'><img src = '../Images/heat-made-2pointer.gif'/></div>"
+        );
         this.heatTurn = false;
         nextTeam();
         return true;
@@ -634,14 +636,18 @@ class Game {
       if (theValue === this.theHardAnswer) {
         this.homeScore += 3;
         $(".home-score").html(this.homeScore);
-        panel.append("<div class = 'gif'><img src = '../Images/heat3pointer.gif'/></div>");
+        panel.append(
+          "<div class = 'gif'><img src = '../Images/heat3pointer.gif'/></div>"
+        );
         this.heatTurn = false;
         nextTeam();
         return true;
       } else {
         this.homeFoul += 1;
         $(".home-fouls").html(this.homeFoul);
-        panel.append("<div class = 'gif'><img src = '../Images/heat-missed-2pointer-1.gif'/></div>");
+        panel.append(
+          "<div class = 'gif'><img src = '../Images/heat-missed-2pointer-1.gif'/></div>"
+        );
         this.heatTurn = false;
         nextTeam();
         return false;
@@ -650,7 +656,9 @@ class Game {
       if (theValue === this.theEasyAnswer) {
         this.awayScore += 1;
         $(".away-score").html(this.awayScore);
-        panel.append("<div class = 'gif'><img src = '../Images/made-ft.gif'/></div>");
+        panel.append(
+          "<div class = 'gif'><img src = '../Images/made-ft.gif'/></div>"
+        );
         this.heatTurn = true;
         heatTeam();
         return true;
@@ -658,7 +666,9 @@ class Game {
       if (theValue === this.theMediumAnswer) {
         this.awayScore += 2;
         $(".away-score").html(this.awayScore);
-        panel.append("<div class = 'gif'><img src = '../Images/celtics-2pointer.gif'/></div>");
+        panel.append(
+          "<div class = 'gif'><img src = '../Images/celtics-2pointer.gif'/></div>"
+        );
         this.heatTurn = true;
         heatTeam();
         return true;
@@ -666,14 +676,18 @@ class Game {
       if (theValue === this.theHardAnswer) {
         this.awayScore += 3;
         $(".away-score").html(this.awayScore);
-        panel.append("<div class = 'gif'><img src = '../Images/celtics-3pointer-make.gif'/></div>");
+        panel.append(
+          "<div class = 'gif'><img src = '../Images/celtics-3pointer-make.gif'/></div>"
+        );
         this.heatTurn = true;
         heatTeam();
         return true;
       } else {
         this.awayFoul += 1;
         $(".away-fouls").html(this.awayFoul);
-        panel.append("<div class = 'gif'><img src = '../Images/celtics-missed-2pointer.gif'/></div>");
+        panel.append(
+          "<div class = 'gif'><img src = '../Images/celtics-missed-2pointer.gif'/></div>"
+        );
         this.heatTurn = true;
         heatTeam();
         return false;
@@ -681,7 +695,7 @@ class Game {
     }
   }
   done() {
-    if (this.homeScore = 5) {
+    if ((this.homeScore = 5)) {
     } else {
       return alert("Boston Celtics win the game!");
     }
