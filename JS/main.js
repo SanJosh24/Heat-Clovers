@@ -1,7 +1,11 @@
 var game;
 // CLICK EVENTS
 var timerInterval;
-
+var gameSound = new Audio("../Images/Jay Rock-Win.mp3");
+var airHorn = new Audio("../Images/air-horn.mp3");
+var letsGoHeat = new Audio("../Images/letsgoheat.mp3");
+var letsGoCeltics = new Audio("../Images/LetsGoCelticsChant!.mp3");
+var buzzer = new Audio("../Images/airhornfixed.wav")
 // $('.back').click(function ()
 $("#start").click(function() {
   console.log("starting new game!!!");
@@ -489,7 +493,7 @@ class Game {
     }, 1000);
   }
   start() {
-    console.log('starting')
+    gameSound.play();
     scoreboard2.empty();
     scoreboard2.prepend(
       `<div class = 'shot-clock'><span id='counter-number'></span></div>` // inputing time remainder element as h2
@@ -626,6 +630,7 @@ class Game {
 
 
     if (this.heatTurn === true) {
+      letsGoHeat.play();
       if (theValue === this.theEasyAnswer) {
         this.homeScore += 1;
         $(".home-score").html(this.homeScore);
@@ -670,6 +675,7 @@ class Game {
         return false;
       }
     } else {
+      letsGoCeltics.play();
       if (theValue === this.theEasyAnswer) {
         this.awayScore += 1;
         $(".away-score").html(this.awayScore);
