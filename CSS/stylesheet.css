@@ -19,7 +19,7 @@ span {
 .img-fluid {
   background-image: url('../Images/1531404.jpg');
   background-size: cover;
-  height: 100vh;
+  height: 108vh;
 }
 
 .start {
@@ -124,8 +124,8 @@ span {
   height: 33.2vh;
   color: red;
   font-size: 6vh;
-  padding-left: 15vw;
-  padding-top: 17.5vh;
+  padding-left: 49vw;
+  padding-top: 25vh;
 }
 
 .heat-sm-logo {
@@ -134,4 +134,14 @@ span {
 
 .celtic-sm-logo {
   width: 1vw;
+}
+
+#scoreBoard2 {
+  position: absolute;
+  width: 100vh;
+  height: 50vh;
+}
+
+.free-throw-gif {
+  height: 25vh;
 }

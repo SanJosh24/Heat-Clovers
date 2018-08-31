@@ -1,5 +1,6 @@
 var game;
 // CLICK EVENTS
+var timerInterval;
 
 // $('.back').click(function ()
 $("#start").click(function() {
@@ -10,6 +11,7 @@ $("#start").click(function() {
 });
 var panel = $("#quiz-area");
 var scoreboard = $("#scoreBoard");
+var scoreboard2 = $("#scoreBoard2")
 
 // Easy Question Set
 
@@ -175,7 +177,7 @@ var mediumQuestions = [
     answers: [
       "/*This comment has more than one line*/",
       "//This comment has more than one line//",
-      "<!--This comment has more than one line-->"
+      "< !--This comment has more than one line-- >"
     ],
     correctAnswer: "/*This comment has more than one line*/",
     points: 2
@@ -472,22 +474,24 @@ class Game {
     this.heatTurn = true;
   }
   countdown() {
-    var timer = setInterval(() => {
+    this.counter = 10;
+    timerInterval = setInterval(() => {
       this.counter--;
       $("#counter-number").html(this.counter);
       if (this.counter === 0 && this.heatTurn == true) {
-        // this.done();
         nextTeam();
-        this.timer = clearInterval(timer);
+        this.counter = 10;
       }
-      if (this.counter === 0 && this.heatTurn == false) {
+      if (this.counter === 0 && this.nextTeam == true) {
         heatTeam();
-        this.timer = clearInterval(timer);
+        this.counter = 10;
       }
     }, 1000);
   }
   start() {
-    scoreboard.prepend(
+    console.log('starting')
+    scoreboard2.empty();
+    scoreboard2.prepend(
       `<div class = 'shot-clock'><span id='counter-number'></span></div>` // inputing time remainder element as h2
     );
 
@@ -526,6 +530,7 @@ class Game {
       }
     });
     $(".heat-medium").click(() => {
+      this.countdown();
       this.theMediumAnswer = mediumQuestions[randomMedium].correctAnswer;
       panel.append("<h2>" + mediumQuestions[randomMedium].question + "</h2>");
       $("#quiz-area img").remove();
@@ -543,6 +548,7 @@ class Game {
       }
     });
     $(".heat-hard").click(() => {
+      this.countdown();
       this.theHardAnswer = hardQuestions[randomHard].correctAnswer;
       panel.append("<h2>" + hardQuestions[randomHard].question + "</h2>");
       $("#quiz-area img").remove();
@@ -560,6 +566,7 @@ class Game {
       }
     });
     $(".celtic-easy").click(() => {
+      this.countdown();
       this.theEasyAnswer = easyQuestions[randomEasy].correctAnswer;
       panel.append("<h2>" + easyQuestions[randomEasy].question + "</h2>");
       $("#quiz-area img").remove();
@@ -577,6 +584,7 @@ class Game {
       }
     });
     $(".celtic-medium").click(() => {
+      this.countdown();
       this.theMediumAnswer = mediumQuestions[randomMedium].correctAnswer;
       panel.append("<h2>" + mediumQuestions[randomMedium].question + "</h2>");
       $("#quiz-area img").remove();
@@ -594,6 +602,7 @@ class Game {
       }
     });
     $(".celtic-hard").click(() => {
+      this.countdown();
       this.theHardAnswer = hardQuestions[randomHard].correctAnswer;
       panel.append("<h2>" + hardQuestions[randomHard].question + "</h2>");
       $("#quiz-area img").remove();
@@ -612,14 +621,19 @@ class Game {
     });
   }
   checkAnswer(theValue) {
+
+    clearInterval(timerInterval)
+
+
     if (this.heatTurn === true) {
       if (theValue === this.theEasyAnswer) {
         this.homeScore += 1;
         $(".home-score").html(this.homeScore);
         panel.append(
-          "<div class = 'gif'><img src = '../Images/made-ft.gif'/></div>"
+          "<div class = 'gif'><img class = 'free-throw-gif' src = '../Images/made-ft.gif'/></div>"
         );
         this.heatTurn = false;
+        // scoreboard2.empty();
         nextTeam();
         return true;
       }
